@@ -1,167 +1,163 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
+import static java.awt.Font.*;
 
-public class ButtonLayout extends JFrame implements ActionListener{
-    JFrame frame;
-    JTextField textField;
-    JButton[] buttonsNumbers = new JButton[10];
-    JButton[] buttonsFunctions = new JButton[9];
-    JButton buttonPlus, buttonMinus, buttonMultiply,
-            buttonDivide, buttonEquals, buttonPoint, buttonReset, buttonDelete, buttonNeg;
-    JPanel panel;
+public class Main extends JFrame implements ActionListener {
 
-    double num1=0, num2=0, result=0;
-    char operator;
 
-    ButtonLayout() {
+    JButton buttonCalculate = new JButton("Calculate");
+    JButton buttonASubmit = new JButton("Submit 'a'");
+    JButton buttonBSubmit = new JButton("Submit 'b'");
+    JButton buttonCSubmit = new JButton("Submit 'c'");
+    JTextField defaultQuadraticEquation = new JTextField("                ax2 + bx + c = 0");
+    JLabel labelA = new JLabel("'a' =");
+    JLabel labelB = new JLabel("'b' =");
+    JLabel labelC = new JLabel("'c' =");
+    JLabel labelX1 = new JLabel("x1 =");
+    JLabel labelX2 = new JLabel("x2 =");
+    JTextField resultFieldX1 = new JTextField();
+    JTextField resultFieldX2 = new JTextField();
+    JButton buttonReset = new JButton("Reset");
+    JTextField textField_a = new JTextField();
+    JTextField textField_b = new JTextField();
+    JTextField textField_c = new JTextField();
+    public double num1Double;
+    public double num2Double;
+    public double num3Double;
 
-        frame = new JFrame();
+
+
+    Main()
+
+
+
+    {
+        defaultQuadraticEquation.setFont(new Font("Century", BOLD, 12));
+        defaultQuadraticEquation.setBackground(Color.LIGHT_GRAY);
+        defaultQuadraticEquation.setForeground(Color.BLACK);
+        defaultQuadraticEquation.setEditable(false);
+        defaultQuadraticEquation.setBounds(20, 12, 190, 25);
+
+        textField_a.setFont(new Font("Century", BOLD, 20));
+        textField_a.setBackground(Color.LIGHT_GRAY);
+        textField_a.setForeground(Color.BLACK);
+        textField_a.setBounds(65, 50, 35, 35);
+
+        textField_b.setFont(new Font("Century", BOLD, 20));
+        textField_b.setBackground(Color.LIGHT_GRAY);
+        textField_b.setForeground(Color.BLACK);
+        textField_b.setBounds(65, 100, 35, 35);
+
+
+        textField_c.setFont(new Font("Century", BOLD, 20));
+        textField_c.setBackground(Color.LIGHT_GRAY);
+        textField_c.setForeground(Color.BLACK);
+        textField_c.setBounds(65, 150, 35, 35);
+
+        buttonASubmit.setOpaque(true);
+        buttonASubmit.setBounds(110, 50, 100, 35);
+        buttonASubmit.setFocusable(false);
+        buttonASubmit.addActionListener(this);
+
+        buttonBSubmit.setOpaque(true);
+        buttonBSubmit.setBounds(110, 100, 100, 35);
+        buttonBSubmit.setFocusable(false);
+        buttonBSubmit.addActionListener(this);
+
+        buttonCSubmit.setOpaque(true);
+        buttonCSubmit.setBounds(110, 150, 100, 35);
+        buttonCSubmit.setFocusable(false);
+        buttonCSubmit.addActionListener(this);
+
+        buttonCalculate.setOpaque(true);
+        buttonCalculate.setBounds(20, 200, 190, 27);
+        buttonCalculate.setFocusable(false);
+        buttonCalculate.addActionListener(this);
+
+        labelA.setBounds(30,54,30,30);
+        labelA.setFont(new Font("Century", BOLD,15));
+        labelB.setBounds(30,105,30,30);
+        labelB.setFont(new Font("Century", BOLD,15));
+        labelC.setBounds(30,154,30,30);
+        labelC.setFont(new Font("Century", BOLD,15));
+        labelX1.setBounds(30, 250, 30, 30);
+        labelX2.setBounds(30, 290, 30, 30);
+
+        resultFieldX1.setBounds(60, 250, 140, 30);
+
+        resultFieldX2.setBounds(60, 290, 140, 30);
+
+        buttonReset.setBounds(160, 332, 67, 23);
+        buttonReset.setFocusable(false);
+        buttonReset.addActionListener(this);
+
+        JFrame frame = new JFrame();
+
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLayout(null);
-        frame.setSize(350, 480);
-        frame.setTitle("Java Calculator");
+
+        frame.setSize(250, 400);
+        frame.setTitle("Quadratic Equation");
         frame.setResizable(false);
-
-        textField = new JTextField();
-        textField.setBounds(50,25,230,50);
-        textField.setFont(new Font("Arial", Font.BOLD, 20));
-        textField.setEditable(false);
-
-        buttonPlus = new JButton("+");
-        buttonMinus = new JButton("-");
-        buttonMultiply = new JButton("*");
-        buttonDivide = new JButton("/");
-        buttonEquals = new JButton("=");
-        buttonPoint = new JButton(",");
-        buttonNeg = new JButton("(-)");
-
-        buttonDelete = new JButton("Delete");
-        buttonReset = new JButton("Reset");
-
-        buttonsFunctions[0] = buttonPlus;
-        buttonsFunctions[1] = buttonMinus;
-        buttonsFunctions[2] = buttonMultiply;
-        buttonsFunctions[3] = buttonDivide;
-        buttonsFunctions[4] = buttonEquals;
-        buttonsFunctions[5] = buttonPoint;
-        buttonsFunctions[6] = buttonReset;
-        buttonsFunctions[7] = buttonDelete;
-        buttonsFunctions[8] = buttonNeg;
-
-        for (int i = 0; i < 9; i++) {
-            buttonsFunctions[i].addActionListener(this);
-            buttonsFunctions[i].setFont(new Font("Arial", Font.BOLD, 13));
-            buttonsFunctions[i].setFocusable(false);
-        }
-        for (int i = 0; i < 10; i++) {
-            buttonsNumbers[i] = new JButton(String.valueOf(i));
-            buttonsNumbers[i].addActionListener(this);
-            buttonsNumbers[i].setFocusable(false);
-            buttonsNumbers[i].setFont(new Font("Arial", Font.BOLD, 13));
-        }
-
-        buttonDelete.setBounds(110,350,80,50);
-        buttonReset.setBounds(200,350,80,50);
-        buttonEquals.setBounds(50,350,50,50);
-
-        panel = new JPanel();
-        panel.setBounds(50,100,230,230);
-        panel.setLayout(new GridLayout(4,4,10,10));
-
-
-        panel.add(buttonsNumbers[1]);
-        panel.add(buttonsNumbers[2]);
-        panel.add(buttonsNumbers[3]);
-        panel.add(buttonPlus);
-        panel.add(buttonsNumbers[4]);
-        panel.add(buttonsNumbers[5]);
-        panel.add(buttonsNumbers[6]);
-        panel.add(buttonMinus);
-        panel.add(buttonsNumbers[7]);
-        panel.add(buttonsNumbers[8]);
-        panel.add(buttonsNumbers[9]);
-        panel.add(buttonMultiply);
-        panel.add(buttonDivide);
-        panel.add(buttonsNumbers[0]);
-        panel.add(buttonDivide);
-        panel.add(buttonPoint);
-        panel.add(buttonNeg);
-
-
-        frame.add(panel);
-        frame.add(textField);
-        frame.add(buttonDelete);
-        frame.add(buttonReset);
-        frame.add(buttonEquals);
         frame.setVisible(true);
+        frame.setLayout(null);
+
+        frame.add(defaultQuadraticEquation);
+        frame.add(buttonASubmit);
+        frame.add(textField_a);
+        frame.add(buttonBSubmit);
+        frame.add(textField_b);
+        frame.add(buttonCSubmit);
+        frame.add(textField_c);
+        frame.add(buttonCalculate);
+        frame.add(resultFieldX1);
+        frame.add(resultFieldX2);
+        frame.add(labelA);
+        frame.add(labelB);
+        frame.add(labelC);
+        frame.add(labelX1);
+        frame.add(labelX2);
+        frame.add(buttonReset);
     }
+
+    public static void main(String[] args) {
+
+        Main quadraticEquation = new Main();
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == buttonReset) {
+            textField_a.setText("");
+            textField_b.setText("");
+            textField_c.setText("");
+        }
+        if (e.getSource() == buttonASubmit) {
+            String num1 = textField_a.getText();
+            this.num1Double = Double.parseDouble(num1);
+            textField_a.setText("");
+        }
+        if (e.getSource() == buttonBSubmit) {
+            String num2 = textField_b.getText();
+            this.num2Double = Double.parseDouble(num2);
+            textField_b.setText("");
+        }
+        if (e.getSource() == buttonCSubmit) {
+            String num3 = textField_c.getText();
+            this.num3Double = Double.parseDouble(num3);
+            textField_c.setText("");
+        }
+        double discriminant = Math.pow(num2Double , 2) - (4 * num1Double * num3Double);
+        double discriminantSquareRoot = Math.sqrt(discriminant);
 
-        for(int i = 0; i < 10; i++) {
-        if(e.getSource() == buttonsNumbers[i]) {
-        textField.setText(textField.getText().concat(String.valueOf(i)));
-        }
-        }
-        if(e.getSource()==buttonPoint) {
-        textField.setText(textField.getText().concat("."));
-        }
-        if(e.getSource()==buttonPlus) {
-        num1 = Double.parseDouble(textField.getText());
-        operator ='+';
-        textField.setText("");
-        }
-        if(e.getSource()==buttonMinus) {
-        num1 = Double.parseDouble(textField.getText());
-        operator ='-';
-        textField.setText("");
-        }
-        if(e.getSource()==buttonMultiply) {
-        num1 = Double.parseDouble(textField.getText());
-        operator ='*';
-        textField.setText("");
-        }
-        if(e.getSource()==buttonDivide) {
-        num1 = Double.parseDouble(textField.getText());
-        operator ='/';
-        textField.setText("");
-        }
-        if(e.getSource()==buttonEquals) {
-        num2 = Double.parseDouble(textField.getText());
+        double resultX1 = ((- 1 * num2Double) + discriminantSquareRoot ) / (2 * num1Double);
+        double resultX2 = ((- 1 * num2Double) - discriminantSquareRoot ) / (2 * num1Double);
 
-        switch(operator) {
-        case '+':
-        result = num1 + num2;
-        break;
-        case '-':
-        result = num1 - num2;
-        break;
-        case '*':
-        result = num1 * num2;
-        break;
-        case '/':
-        result = num1 / num2;
-        break;
+        if (e.getSource() == buttonCalculate){
+            resultFieldX1.setText(String.valueOf(resultX1));
+            resultFieldX2.setText(String.valueOf(resultX2));
+
         }
-        textField.setText(String.valueOf(result));
-        num1 = result;
-        }
-        if(e.getSource()== buttonReset) {
-        textField.setText("");
-        }
-        if(e.getSource()==buttonDelete) {
-        String delString = textField.getText();
-        textField.setText("");
-        for(int i = 0; i < delString.length() - 1; i++) {
-        textField.setText(textField.getText() + delString.charAt(i));
-        }
-        }
-        if(e.getSource() == buttonNeg) {
-        double intoNeg = Double.parseDouble(textField.getText());
-        intoNeg *= -1;
-        textField.setText(String.valueOf(intoNeg));
-        }
-       }
     }
+}
+
